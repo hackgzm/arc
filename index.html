@@ -32,6 +32,7 @@
     }
     header{
       display:flex;
+      flex-wrap:wrap;
       justify-content:space-between;
       align-items:center;
       padding:20px 40px;
@@ -43,9 +44,18 @@
       font-weight:bold;
       color:var(--neon);
       animation: glitch 1s infinite;
+      flex:1 1 100%;
+      text-align:center;
+      margin-bottom:10px;
+    }
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:15px;
+      flex:1 1 100%;
     }
     nav a{
-      margin:0 20px;
       color:var(--neon);
       text-decoration:none;
       font-size:18px;
@@ -55,12 +65,15 @@
     nav a:hover{color:#fff;}
     main{
       display:flex;
+      flex-wrap:wrap;
       justify-content:space-around;
       align-items:flex-start;
-      padding:40px;
+      padding:40px 20px;
+      gap:20px;
     }
     .form-container{
-      width:35%;
+      flex:1 1 300px;
+      max-width:500px;
       background-color:var(--panel);
       border:2px solid var(--border);
       padding:20px;
@@ -96,7 +109,8 @@
       color:#000;
     }
     .info-box{
-      width:45%;
+      flex:1 1 300px;
+      max-width:600px;
       border:2px solid var(--border);
       border-radius:10px;
       padding:20px;
@@ -106,10 +120,25 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      font-size:28px;
+      font-size:22px;
       font-weight:bold;
     }
     .error{color:red;font-size:12px;margin-bottom:6px;}
+
+    /* Медиазапросы для адаптивности */
+    @media(max-width:768px){
+      header{padding:15px;}
+      .logo-text{font-size:20px;}
+      nav a{font-size:16px;}
+      main{padding:20px;}
+      .info-box{font-size:20px; min-height:300px;}
+    }
+    @media(max-width:480px){
+      .logo-text{font-size:18px;}
+      nav a{font-size:14px;}
+      .info-box{font-size:18px; min-height:250px;}
+      .form-container{padding:15px;}
+    }
   </style>
 </head>
 <body>
@@ -141,7 +170,7 @@
         <label for="message" class="glitch">Сообщение</label>
         <textarea id="message" name="message" rows="4" maxlength="600"></textarea>
 
-        <div style="display:flex;gap:10px;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button type="submit" class="glitch">ОТПРАВИТЬ</button>
           <button type="reset" class="glitch">СБРОС</button>
         </div>
@@ -158,7 +187,7 @@
     const content = {
       about: 'Я исследую цифровые системы и сети, нахожу уязвимости и превращаю их в конкретные решения. Мои действия направлены на то, чтобы понять, где слабые места и как их можно исправить. Если ты со мной — значит, ты понимаешь ценность конкретного результата и эффективности в мире информационной безопасности.',
       community: 'Мы - те, кто говорит на языке образов. Мы - творческое сообщество, которое создает новую культурную реальность. Нас не интересуют шаблоны и готовые форматы. Мы экспериментируем со звуком, изображением и смыслами. Мы не стремимся быть известными. Мы создаем артефакты - работы, которые заставляют чувствовать, а не просто потреблять.',
-      coming: 'Я создаю операционную систему сообщества ARC — полноценную, рабочую платформу, заточенную под наши нужды. ARC OS будет с продуманной безопасностью. Это не обещание ради громкого слова — это конечный продукт: рабочая ОС, поддержка и документация. Уверен, вам понравится. '
+      coming: 'Я создаю операционную систему сообщества ARC — полноценную, рабочую платформу, заточенную под наши нужды. ARC OS будет с продуманной безопасностью. Это не обещание ради громкого слова — это конечный продукт: рабочая ОС, поддержка и документация. Уверен, вам понравится.'
     };
     links.forEach(link=>{
       link.addEventListener('mouseenter',()=>{
@@ -182,7 +211,7 @@
       document.getElementById('err-pass').textContent='';
 
       if(name.length<2){document.getElementById('err-name').textContent='Имя должно быть минимум 2 символа';valid=false;}
-      if(!/^\\S+@\\S+\\.\\S+$/.test(email)){document.getElementById('err-email').textContent='Введите корректный email';valid=false;}
+      if(!/^\S+@\S+\.\S+$/.test(email)){document.getElementById('err-email').textContent='Введите корректный email';valid=false;}
       if(pass.length<8){document.getElementById('err-pass').textContent='Пароль должен быть минимум 8 символов';valid=false;}
 
       if(valid){
