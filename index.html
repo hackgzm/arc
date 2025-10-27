@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ARC</title>
+  <style>
+    :root{
+      --bg:#000;
+      --neon:#00ff66;
+      --dark:#040404;
+      --panel:rgba(0,255,102,0.1);
+      --border:rgba(0,255,102,0.3);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Consolas,monospace;}
+    body{
+      background-color:var(--bg);
+      color:var(--neon);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    @keyframes glitch {
+      0% {text-shadow:2px 2px var(--neon),-2px -2px #000;}
+      20% {text-shadow:-2px -2px var(--neon),2px 2px #000;}
+      40% {text-shadow:2px -2px var(--neon),-2px 2px #000;}
+      60% {text-shadow:-2px 2px var(--neon),2px -2px #000;}
+      80% {text-shadow:3px 3px var(--neon),-3px -3px #000;}
+      100% {text-shadow:0 0 6px var(--neon),0 0 10px var(--neon);}
+    }
+    .glitch {
+      animation: glitch 1s infinite;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 40px;
+      background-color:rgba(0,0,0,0.6);
+      border-bottom:1px solid var(--border);
+    }
+    .logo-text{
+      font-size:24px;
+      font-weight:bold;
+      color:var(--neon);
+      animation: glitch 1s infinite;
+    }
+    nav a{
+      margin:0 20px;
+      color:var(--neon);
+      text-decoration:none;
+      font-size:18px;
+      position:relative;
+      transition:0.2s;
+    }
+    nav a:hover{color:#fff;}
+    main{
+      display:flex;
+      justify-content:space-around;
+      align-items:flex-start;
+      padding:40px;
+    }
+    .form-container{
+      width:35%;
+      background-color:var(--panel);
+      border:2px solid var(--border);
+      padding:20px;
+      border-radius:10px;
+    }
+    form{display:flex;flex-direction:column;}
+    label{font-size:14px;margin-bottom:4px;}
+    input,textarea{
+      background-color:rgba(0,0,0,0.6);
+      border:1px solid var(--border);
+      color:var(--neon);
+      padding:8px;
+      border-radius:5px;
+      margin-bottom:10px;
+    }
+    input:focus,textarea:focus{
+      outline:none;
+      border-color:var(--neon);
+      box-shadow:0 0 8px var(--neon);
+    }
+    button{
+      background-color:transparent;
+      border:1px solid var(--border);
+      color:var(--neon);
+      padding:8px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      transition:0.2s;
+      font-weight:bold;
+    }
+    button:hover{
+      background-color:var(--neon);
+      color:#000;
+    }
+    .info-box{
+      width:45%;
+      border:2px solid var(--border);
+      border-radius:10px;
+      padding:20px;
+      background-color:rgba(0,0,0,0.6);
+      min-height:400px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      font-size:28px;
+      font-weight:bold;
+    }
+    .error{color:red;font-size:12px;margin-bottom:6px;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-text glitch">ALTERNATIVE REALITY COMMUNITY</div>
+    <nav>
+      <a href="#" data-info="about" class="glitch">About Me</a>
+      <a href="#" data-info="community" class="glitch">Community</a>
+      <a href="#" data-info="coming" class="glitch">Coming soon</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="form-container">
+      <h2 class="glitch">Связаться с проектом</h2>
+      <form id="contact" novalidate>
+        <label for="name" class="glitch">Имя (обязательно)</label>
+        <input id="name" name="name" type="text" required minlength="2">
+        <div class="error" id="err-name"></div>
+
+        <label for="email" class="glitch">Email (обязательно)</label>
+        <input id="email" name="email" type="email" required>
+        <div class="error" id="err-email"></div>
+
+        <label for="password" class="glitch">Пароль (обязательно)</label>
+        <input id="password" name="password" type="password" required minlength="8">
+        <div class="error" id="err-pass"></div>
+
+        <label for="message" class="glitch">Сообщение</label>
+        <textarea id="message" name="message" rows="4" maxlength="600"></textarea>
+
+        <div style="display:flex;gap:10px;">
+          <button type="submit" class="glitch">ОТПРАВИТЬ</button>
+          <button type="reset" class="glitch">СБРОС</button>
+        </div>
+        <div id="formResult" style="margin-top:10px;" class="glitch"></div>
+      </form>
+    </section>
+
+    <section class="info-box glitch" id="info-box">Мы особенные...</section>
+  </main>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const box = document.getElementById('info-box');
+    const content = {
+      about: 'Я исследую цифровые системы и сети, нахожу уязвимости и превращаю их в конкретные решения. Мои действия направлены на то, чтобы понять, где слабые места и как их можно исправить. Если ты со мной — значит, ты понимаешь ценность конкретного результата и эффективности в мире информационной безопасности.',
+      community: 'Мы - те, кто говорит на языке образов. Мы - творческое сообщество, которое создает новую культурную реальность. Нас не интересуют шаблоны и готовые форматы. Мы экспериментируем со звуком, изображением и смыслами. Мы не стремимся быть известными. Мы создаем артефакты - работы, которые заставляют чувствовать, а не просто потреблять.',
+      coming: 'Я создаю операционную систему сообщества ARC — полноценную, рабочую платформу, заточенную под наши нужды. ARC OS будет с продуманной безопасностью. Это не обещание ради громкого слова — это конечный продукт: рабочая ОС, поддержка и документация. Уверен, вам понравится. '
+    };
+    links.forEach(link=>{
+      link.addEventListener('mouseenter',()=>{
+        box.textContent = content[link.dataset.info];
+      });
+      link.addEventListener('mouseleave',()=>{
+        box.textContent = 'Мы особенные...';
+      });
+    });
+
+    const form = document.getElementById('contact');
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      let valid=true;
+      const name=form.name.value.trim();
+      const email=form.email.value.trim();
+      const pass=form.password.value;
+
+      document.getElementById('err-name').textContent='';
+      document.getElementById('err-email').textContent='';
+      document.getElementById('err-pass').textContent='';
+
+      if(name.length<2){document.getElementById('err-name').textContent='Имя должно быть минимум 2 символа';valid=false;}
+      if(!/^\\S+@\\S+\\.\\S+$/.test(email)){document.getElementById('err-email').textContent='Введите корректный email';valid=false;}
+      if(pass.length<8){document.getElementById('err-pass').textContent='Пароль должен быть минимум 8 символов';valid=false;}
+
+      if(valid){
+        document.getElementById('formResult').textContent='Форма успешно проверена!';
+      }else{
+        document.getElementById('formResult').textContent='Исправьте ошибки.';
+      }
+    });
+  </script>
+</body>
+</html>
